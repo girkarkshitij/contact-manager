@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator/check');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+const secret = process.env.MONGO_URI;
 
 const User = require('../models/User');
 
@@ -42,7 +45,23 @@ router.post(
 
       await user.save();
 
-      res.send('User added 👨');
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
+
+      jwt.sign(
+        payload,
+        secret,
+        {
+          expiresIn: 360000,
+        },
+        (err, token) => {
+          if (err) throw err;
+          res.json({ token });
+        }
+      );
     } catch (error) {
       console.error(error.message);
       res.status(500).send('Server error');
