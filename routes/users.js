@@ -4,7 +4,7 @@ const { check, validationResult } = require('express-validator/check');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const secret = process.env.MONGO_URI;
+const secret = process.env.JWT_SECRET;
 
 const User = require('../models/User');
 
