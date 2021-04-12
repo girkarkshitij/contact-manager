@@ -1,9 +1,25 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import AlertContext from '../../context/alert/alertContext';
+import AuthContext from '../../context/auth/authContext';
 
-const SignUp = () => {
+const SignUp = (props) => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
+
+  const authContext = useContext(AuthContext);
+  const { signup, error, clearErrors, isAuthenticated } = authContext;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push('/');
+    }
+
+    if (error) {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated, props.history]);
 
   const [user, setUser] = useState({
     name: '',
@@ -25,7 +41,11 @@ const SignUp = () => {
     if (password !== password2) {
       setAlert('Passwords do not match', 'danger');
     } else {
-      console.log('Sign Up Done');
+      signup({
+        name,
+        email,
+        password,
+      });
     }
   };
 
@@ -63,7 +83,7 @@ const SignUp = () => {
             value={password}
             onChange={onChange}
             required
-            minLength='6'
+            minLength='8'
           />
         </div>
         <div className='form-group'>
@@ -74,7 +94,7 @@ const SignUp = () => {
             value={password2}
             onChange={onChange}
             required
-            minLength='6'
+            minLength='8'
           />
         </div>
         <input
