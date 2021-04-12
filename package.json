@@ -8,7 +8,8 @@
     "server": "nodemon -L server.js",
     "client": "npm start --prefix client",
     "clientinstall": "npm install --prefix client",
-    "dev": "concurrently \"npm run server\" \"CHOKIDAR_USEPOLLING=true npm run client\""
+    "dev": "concurrently \"npm run server\" \"CHOKIDAR_USEPOLLING=true npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "Kshitij Girkar",
   "license": "ISC",
