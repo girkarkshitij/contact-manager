@@ -2,6 +2,7 @@
 **Full-stack MERN contact manager with React hooks, context API & JWT authentication**
 
 [CHECK LIVE](https://contact-keeper-kshitij.herokuapp.com/)
+(use email : a@b.com, password : 12345678)
 
 ### Installation
 
